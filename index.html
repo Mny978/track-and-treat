@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track and Treat - Personalized Dietetics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #0d9488; /* Teal 600 */
+            --color-primary-hover: #0f766e; /* Teal 700 */
+            --color-secondary: #f59e0b; /* Amber 500 */
+            --color-secondary-hover: #d97706; /* Amber 600 */
+            --color-accent: #3b82f6; /* Blue 500 */
+            --color-background: #f9fafb; /* Gray 50 */
+            --color-card: #ffffff;
+            --color-text-primary: #1f2937; /* Gray 800 */
+            --color-text-secondary: #6b7280; /* Gray 500 */
+            --color-border: #e5e7eb; /* Gray 200 */
+        }
+        html.dark {
+            --color-primary: #2dd4bf; /* Teal 400 */
+            --color-primary-hover: #14b8a6; /* Teal 500 */
+            --color-secondary: #fbbf24; /* Amber 400 */
+            --color-secondary-hover: #f59e0b; /* Amber 500 */
+            --color-accent: #60a5fa; /* Blue 400 */
+            --color-background: #111827; /* Gray 900 */
+            --color-card: #1f2937; /* Gray 800 */
+            --color-text-primary: #f3f4f6; /* Gray 100 */
+            --color-text-secondary: #9ca3af; /* Gray 400 */
+            --color-border: #374151; /* Gray 700 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--color-primary);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #e0e0e0;
+        }
+        .btn-primary-glow:hover {
+            box-shadow: 0 4px 15px -3px rgba(13, 148, 136, 0.5);
+        }
+        .text-shadow-custom {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .prose {
+          max-width: 100%;
+          color: var(--color-text-primary);
+        }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+            margin-top: 1.25em;
+            margin-bottom: 0.5em;
+            color: var(--color-text-primary);
+        }
+        .prose ul, .prose ol {
+            margin-left: 1.5rem;
+        }
+        .prose > *:first-child {
+            margin-top: 0;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "@testing-library/react": "https://aistudiocdn.com/@testing-library/react@^16.3.0",
+    "@testing-library/jest-dom": "https://aistudiocdn.com/@testing-library/jest-dom@^6.9.1",
+    "@jest/globals": "https://aistudiocdn.com/@jest/globals@^30.2.0",
+    "recharts": "https://aistudiocdn.com/recharts@^2.12.7"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
