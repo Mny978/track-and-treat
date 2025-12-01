@@ -14,9 +14,9 @@
     "lucide-react": "0.263.1",
     "@google/genai": "^1.30.0",
     "recharts": "^2.12.7",
-    "@jest/globals": "^30.2.0",
+    "@testing-library/react": "^16.3.0",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0"
+    "@jest/globals": "^30.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
