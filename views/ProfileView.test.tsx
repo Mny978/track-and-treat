@@ -11,7 +11,8 @@ import type { Profile, Assessment } from '../types';
 
 // Mock the useAppContext hook to provide controlled context for tests
 jest.mock('../contexts/AppContext', () => ({
-    ...jest.requireActual('../contexts/AppContext'),
+    // FIX: Cast the result of requireActual to object to prevent spread type error.
+    ...(jest.requireActual('../contexts/AppContext') as object),
     useAppContext: jest.fn(),
 }));
 
@@ -108,13 +109,15 @@ describe('ProfileView', () => {
         await waitFor(() => {
             // 1. Verify that calculateAssessment was called with the latest form data
             expect(mockCalculateAssessment).toHaveBeenCalledTimes(1);
-            const capturedProfileForAssessment = mockCalculateAssessment.mock.calls[0][0];
+            // FIX: Cast mock call argument to Profile to access properties without type errors.
+            const capturedProfileForAssessment = mockCalculateAssessment.mock.calls[0][0] as Profile;
             expect(capturedProfileForAssessment.name).toBe('Jane Doe');
             expect(capturedProfileForAssessment.weight).toBe(70); 
 
             // 2. Verify that setProfile was called with the full updated profile, including the new assessment
             expect(mockSetProfile).toHaveBeenCalledTimes(1);
-            const finalProfileToSave = mockSetProfile.mock.calls[0][0];
+            // FIX: Cast mock call argument to Profile to access properties without type errors.
+            const finalProfileToSave = mockSetProfile.mock.calls[0][0] as Profile;
             expect(finalProfileToSave.name).toBe('Jane Doe');
             expect(finalProfileToSave.weight).toBe(70);
             expect(finalProfileToSave.proteinGoal).toBe(160);

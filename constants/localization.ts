@@ -3,7 +3,6 @@ export const appStrings = {
     en: {
         appTitle: "Track and Treat - Personalized Dietetics",
         languageLabel: "Language",
-        userIdLabel: "User ID:",
         welcomeHeader: "Welcome to Track and Treat!",
         navDashboard: "Dashboard",
         navProfile: "Profile & Goals",
@@ -13,6 +12,7 @@ export const appStrings = {
         navReports: "Report Analysis",
         navGuidance: "Nutrient Guidance",
         navSearch: "Health Search",
+        navChat: "AI Assistant",
         navFeedback: "Feedback",
         
         // Dashboard
@@ -143,6 +143,12 @@ export const appStrings = {
         sourcesTitle: "Sources",
         searchInitialPrompt: "Your search results will appear here.",
 
+        // Chat
+        chatMainHeader: "AI Assistant",
+        chatWelcome: "Hello! I'm your AI health assistant. How can I help you today with your diet, nutrition, or fitness questions?",
+        chatInputPlaceholder: "Ask me anything about nutrition...",
+        btnClearChat: "Clear Chat",
+
         // Feedback
         feedbackTitle: "Submit Feedback",
         feedbackType: "Feedback Type",
@@ -156,7 +162,6 @@ export const appStrings = {
     hi: {
         appTitle: "ट्रैक एंड ट्रीट - व्यक्तिगत पोषण",
         languageLabel: "भाषा",
-        userIdLabel: "उपयोगकर्ता आईडी:",
         welcomeHeader: "ट्रैक एंड ट्रीट में आपका स्वागत है!",
         navDashboard: "डैशबोर्ड",
         navProfile: "प्रोफाइल और लक्ष्य",
@@ -166,6 +171,7 @@ export const appStrings = {
         navReports: "रिपोर्ट विश्लेषण",
         navGuidance: "पोषक तत्व मार्गदर्शन",
         navSearch: "स्वास्थ्य खोज",
+        navChat: "एआई सहायक",
         navFeedback: "प्रतिक्रिया",
         
         dashSnapshotHeader: "आपका स्वास्थ्य स्नैपशॉट",
@@ -288,6 +294,12 @@ export const appStrings = {
         searchResultsTitle: "खोज के परिणाम",
         sourcesTitle: "स्रोत",
         searchInitialPrompt: "आपके खोज परिणाम यहां दिखाई देंगे।",
+        
+        // Chat
+        chatMainHeader: "एआई सहायक",
+        chatWelcome: "नमस्ते! मैं आपका एआई स्वास्थ्य सहायक हूं। आज मैं आपके आहार, पोषण, या फिटनेस संबंधी सवालों में कैसे मदद कर सकता हूं?",
+        chatInputPlaceholder: "पोषण के बारे में कुछ भी पूछें...",
+        btnClearChat: "चैट साफ़ करें",
 
         // Feedback
         feedbackTitle: "प्रतिक्रिया भेजें",
@@ -302,7 +314,6 @@ export const appStrings = {
     gu: {
         appTitle: "ટ્રેક એન્ડ ટ્રીટ - વ્યક્તિગત આહારશાસ્ત્ર",
         languageLabel: "ભાષા",
-        userIdLabel: "વપરાશકર્તા ID:",
         welcomeHeader: "ટ્રેક એન્ડ ટ્રીટમાં તમારું સ્વાગત છે!",
         navDashboard: "ડેશબોર્ડ",
         navProfile: "પ્રોફાઇલ અને લક્ષ્યો",
@@ -312,6 +323,7 @@ export const appStrings = {
         navReports: "રિપોર્ટ વિશ્લેષણ",
         navGuidance: "પોષક માર્ગદર્શન",
         navSearch: "આરોગ્ય શોધ",
+        navChat: "AI સહાયક",
         navFeedback: "પ્રતિસાદ",
         
         dashSnapshotHeader: "તમારો સ્વાસ્થ્ય સ્નેપશોટ",
@@ -434,6 +446,12 @@ export const appStrings = {
         searchResultsTitle: "શોધ પરિણામો",
         sourcesTitle: "સ્ત્રોતો",
         searchInitialPrompt: "તમારા શોધ પરિણામો અહીં દેખાશે.",
+        
+        // Chat
+        chatMainHeader: "AI સહાયક",
+        chatWelcome: "નમસ્તે! હું તમારો AI આરોગ્ય સહાયક છું. આજે હું તમારા આહાર, પોષણ, અથવા ફિટનેસ સંબંધિત પ્રશ્નોમાં કેવી રીતે મદદ કરી શકું?",
+        chatInputPlaceholder: "પોષણ વિશે કંઈપણ પૂછો...",
+        btnClearChat: "ચેટ સાફ કરો",
 
         // Feedback
         feedbackTitle: "પ્રતિસાદ સબમિટ કરો",

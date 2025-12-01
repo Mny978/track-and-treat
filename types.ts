@@ -1,6 +1,6 @@
 export type Language = 'en' | 'hi' | 'gu';
 
-export type View = 'dashboard' | 'profile' | 'plan' | 'tracker' | 'recipes' | 'reports' | 'guidance' | 'search';
+export type View = 'dashboard' | 'profile' | 'plan' | 'tracker' | 'recipes' | 'reports' | 'guidance' | 'search' | 'chat';
 
 export type Gender = 'Male' | 'Female' | 'Other';
 export type ActivityLevel = 'Sedentary' | 'Light' | 'Moderate' | 'High' | 'Extreme';
@@ -59,7 +59,6 @@ export interface FeedbackEntry {
     timestamp: string;
 }
 
-// FIX: Add ChatMessage type definition for the chat feature.
 export interface ChatMessage {
     role: 'user' | 'model';
     text: string;

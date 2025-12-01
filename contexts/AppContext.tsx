@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import type { Profile, TrackingState, Language, Assessment } from '../types';
 import { appStrings } from '../constants/localization';
@@ -12,7 +13,7 @@ const initialProfile: Profile = {
     height: null,
     activity: 'Sedentary',
     dietaryPreference: 'Veg',
-    goal: 'Weight Loss',
+    goal: 'Maintenance',
     medicalConditions: '',
     allergies: '',
     likesDislikes: '',
@@ -21,7 +22,7 @@ const initialProfile: Profile = {
         bmi: null,
         tdee: null,
         target: null,
-        bmiStatus: 'Enter details to calculate.',
+        bmiStatus: '',
     },
     proteinGoal: null,
     carbGoal: null,

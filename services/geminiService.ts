@@ -1,24 +1,27 @@
 
 
-// FIX: Import Chat and Content types from @google/genai for chat functionality.
 import { GoogleGenAI, type Chat, type Content } from "@google/genai";
-// FIX: Import ChatMessage type.
 import type { Profile, MealLogEntry, GroundedSearchResult, GroundingChunk, Assessment, ChatMessage } from '../types';
-
-const API_KEY = process.env.API_KEY;
-
-if (!API_KEY) {
-  console.warn("API_KEY environment variable is not set. Gemini API calls will fail.");
-}
-
-const ai = new GoogleGenAI({ apiKey: API_KEY! });
 
 const FLASH_MODEL = 'gemini-2.5-flash';
 const PRO_MODEL = 'gemini-3-pro-preview';
 
+let ai: GoogleGenAI | null = null;
+const getAi = (): GoogleGenAI => {
+    if (!ai) {
+        const API_KEY = process.env.API_KEY;
+        if (!API_KEY) {
+          console.warn("API_KEY environment variable is not set. Gemini API calls will fail.");
+        }
+        ai = new GoogleGenAI({ apiKey: API_KEY! });
+    }
+    return ai;
+};
+
+
 const callGemini = async (prompt: string, systemInstruction: string, model: string = FLASH_MODEL): Promise<string> => {
     try {
-        const response = await ai.models.generateContent({
+        const response = await getAi().models.generateContent({
             model,
             contents: [{ parts: [{ text: prompt }] }],
             config: {
@@ -169,7 +172,7 @@ export const getNutritionalGuidance = async (input: string, type: 'nutrients_and
 
 export const performGroundedSearch = async (query: string): Promise<GroundedSearchResult> => {
     try {
-        const response = await ai.models.generateContent({
+        const response = await getAi().models.generateContent({
             model: FLASH_MODEL,
             contents: [{ parts: [{ text: query }] }],
             config: {
@@ -191,9 +194,8 @@ export const performGroundedSearch = async (query: string): Promise<GroundedSear
     }
 };
 
-// FIX: Export startChat function to initialize a new chat session.
 export const startChat = (history: ChatMessage[]): Chat => {
-    const chat = ai.chats.create({
+    const chat = getAi().chats.create({
         model: FLASH_MODEL,
         history: history.map(m => ({
             role: m.role,
@@ -206,7 +208,6 @@ export const startChat = (history: ChatMessage[]): Chat => {
     return chat;
 };
 
-// FIX: Export sendMessageToChat function to send messages to an existing chat session.
 export const sendMessageToChat = async (chat: Chat, message: string): Promise<string> => {
     try {
         const response = await chat.sendMessage({ message });

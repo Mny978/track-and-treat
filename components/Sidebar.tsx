@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import type { View, Language } from '../types';
 import { useAppContext } from '../contexts/AppContext';
-import { HomeIcon, UserIcon, ChefHatIcon, ActivityIcon, UtensilsIcon, FileTextIcon, GraduationCapIcon, SearchIcon, MessageSquareIcon, XIcon, DefaultAvatarIcon } from './common/icons';
+import { HomeIcon, UserIcon, ChefHatIcon, ActivityIcon, UtensilsIcon, FileTextIcon, GraduationCapIcon, SearchIcon, MessageSquareIcon, XIcon, DefaultAvatarIcon, BotMessageSquareIcon } from './common/icons';
 import FeedbackModal from './FeedbackModal';
 import { LogoIcon } from './common/LogoIcon';
 
@@ -22,6 +22,7 @@ const navItems = [
     { id: 'reports', labelKey: 'navReports', icon: <FileTextIcon /> },
     { id: 'guidance', labelKey: 'navGuidance', icon: <GraduationCapIcon /> },
     { id: 'search', labelKey: 'navSearch', icon: <SearchIcon /> },
+    { id: 'chat', labelKey: 'navChat', icon: <BotMessageSquareIcon /> },
 ] as const;
 
 const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView, isMobileOpen, setMobileOpen }) => {
@@ -88,50 +89,50 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView, isMobileOp
                     </div>
                 </div>
 
-                <div className="w-full pt-2">
-                    <label htmlFor="language-select" className="block text-xs font-medium text-[var(--color-text-secondary)] mb-1">{strings.languageLabel}</label>
-                    <select id="language-select" value={language} onChange={handleLanguageChange} className="w-full p-2 border border-[var(--color-border)] rounded-lg text-sm bg-[var(--color-card)] text-[var(--color-text-primary)]">
-                        <option value="en">English</option>
-                        <option value="hi">हिन्दी (Hindi)</option>
-                        <option value="gu">ગુજરાતી (Gujarati)</option>
-                    </select>
-                </div>
-                
-                <div className="flex-1 space-y-2 pt-2">
-                    {navItems.map(item => {
-                        const isActive = activeView === item.id;
-                        return (
-                            <button
-                                key={item.id}
-                                onClick={() => handleNavItemClick(item.id)}
-                                className={`nav-item flex items-center p-3 rounded-xl transition-all duration-300 w-full ${
-                                    isActive
-                                        ? 'bg-[var(--color-primary)] text-white shadow-lg shadow-[var(--color-primary)]/30'
-                                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-background)] hover:text-[var(--color-text-primary)]'
-                                }`}
-                            >
-                                {item.icon}
-                                <span className="font-medium">{strings[item.labelKey]}</span>
-                            </button>
-                        );
-                    })}
+                {/* Navigation Links */}
+                <div className="flex-1 space-y-1">
+                    {navItems.map(item => (
+                        <a
+                            key={item.id}
+                            href="#"
+                            onClick={(e) => { e.preventDefault(); handleNavItemClick(item.id as View); }}
+                            className={`flex items-center p-3 rounded-lg font-semibold transition-all duration-200 ${
+                                activeView === item.id 
+                                ? 'bg-[var(--color-primary)] text-white shadow-md' 
+                                : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-background)] hover:text-[var(--color-text-primary)]'
+                            }`}
+                        >
+                            {item.icon}
+                            {strings[item.labelKey as keyof typeof strings]}
+                        </a>
+                    ))}
                 </div>
 
-
-                <div className="pt-2">
-                    <button
+                {/* Footer Section */}
+                <div className="mt-auto pt-4 border-t border-[var(--color-border)] space-y-4">
+                    <button 
                         onClick={handleFeedbackClick}
-                        className="nav-item flex items-center p-3 rounded-xl transition-all duration-300 text-[var(--color-text-secondary)] hover:bg-[var(--color-background)] hover:text-[var(--color-text-primary)] w-full"
+                        className="w-full flex items-center p-3 rounded-lg font-semibold text-[var(--color-text-secondary)] hover:bg-[var(--color-background)] hover:text-[var(--color-text-primary)] transition-all duration-200"
                     >
                         <MessageSquareIcon />
-                        <span className="font-medium">{strings.navFeedback}</span>
+                        {strings.navFeedback}
                     </button>
+                    <div className="flex flex-col">
+                        <label htmlFor="language-select" className="text-xs text-[var(--color-text-secondary)] mb-1">{strings.languageLabel}</label>
+                        <select
+                            id="language-select"
+                            value={language}
+                            onChange={handleLanguageChange}
+                            className="w-full p-2 border border-[var(--color-border)] rounded-lg bg-[var(--color-card)] focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
+                        >
+                            <option value="en">English</option>
+                            <option value="hi">हिन्दी (Hindi)</option>
+                            <option value="gu">ગુજરાતી (Gujarati)</option>
+                        </select>
+                    </div>
                 </div>
             </nav>
-            <FeedbackModal 
-                isOpen={isFeedbackModalOpen}
-                onClose={() => setIsFeedbackModalOpen(false)}
-            />
+            <FeedbackModal isOpen={isFeedbackModalOpen} onClose={() => setIsFeedbackModalOpen(false)} />
         </>
     );
 };

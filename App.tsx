@@ -9,6 +9,7 @@ import RecipesView from './views/RecipesView';
 import ReportsView from './views/ReportsView';
 import GuidanceView from './views/GuidanceView';
 import SearchView from './views/SearchView';
+import ChatView from './views/ChatView';
 import { AppProvider } from './contexts/AppContext';
 import type { View } from './types';
 import { MenuIcon } from './components/common/icons';
@@ -36,6 +37,8 @@ const App: React.FC = () => {
                 return <GuidanceView />;
             case 'search':
                 return <SearchView />;
+            case 'chat':
+                return <ChatView />;
             default:
                 return <DashboardView />;
         }
@@ -64,7 +67,7 @@ const App: React.FC = () => {
                         </div>
                         <div className="w-8 h-8"></div> {/* Spacer */}
                     </header>
-                    <main className="flex-1 p-4 md:p-8 bg-[var(--color-background)] overflow-y-auto">
+                    <main className={`flex-1 bg-[var(--color-background)] ${activeView === 'chat' ? 'p-4 md:p-8 flex flex-col' : 'p-4 md:p-8 overflow-y-auto'}`}>
                         {renderView()}
                     </main>
                 </div>

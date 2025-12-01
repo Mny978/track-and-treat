@@ -1,5 +1,6 @@
 
 
+
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 // FIX: Add startChat and sendMessageToChat to imports for testing.
 import { 
@@ -19,9 +20,10 @@ import type { Profile, MealLogEntry, Assessment, GroundingChunk, ChatMessage } f
 
 // --- Mocks ---
 // FIX: Update mocks to support chat functionality.
-const mockGenerateContent = jest.fn();
-const mockSendMessage = jest.fn();
-const mockChatCreate = jest.fn().mockImplementation(() => ({
+// Fix: Explicitly type mocks to prevent type inference issues with mockResolvedValue/mockRejectedValue.
+const mockGenerateContent: jest.Mock = jest.fn();
+const mockSendMessage: jest.Mock = jest.fn();
+const mockChatCreate: jest.Mock = jest.fn().mockImplementation(() => ({
     sendMessage: mockSendMessage,
 }));
 
@@ -42,7 +44,10 @@ describe('geminiService', () => {
         // Clear all mock history and implementations before each test
         jest.clearAllMocks();
         // Default successful response
+        // FIX: Cast mock to jest.Mock to resolve values without type errors.
+        // Fix: Removed unnecessary cast as mock is now typed.
         mockGenerateContent.mockResolvedValue({ text: 'Mocked AI Response' });
+        // Fix: Removed unnecessary cast as mock is now typed.
         mockSendMessage.mockResolvedValue({ text: 'Mocked Chat Response' });
     });
 
@@ -52,7 +57,8 @@ describe('geminiService', () => {
             await generateHealthSummary(assessment);
             
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const call = mockGenerateContent.mock.calls[0][0];
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const call = mockGenerateContent.mock.calls[0][0] as any;
             expect(call.model).toBe('gemini-2.5-flash');
             expect(call.config.systemInstruction).toContain('AI health assistant');
             expect(call.contents[0].parts[0].text).toContain('BMI: 24.5 (Healthy Weight)');
@@ -74,7 +80,8 @@ describe('geminiService', () => {
             await generateDetailedPlan(profile);
 
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const call = mockGenerateContent.mock.calls[0][0];
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const call = mockGenerateContent.mock.calls[0][0] as any;
             const prompt = call.contents[0].parts[0].text;
 
             expect(prompt).toContain('Goal: Weight Loss');
@@ -96,7 +103,8 @@ describe('geminiService', () => {
             await analyzeMealLog(logEntries, profile);
 
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const prompt = mockGenerateContent.mock.calls[0][0].contents[0].parts[0].text;
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const prompt = (mockGenerateContent.mock.calls[0][0] as any).contents[0].parts[0].text;
             expect(prompt).toContain('Oats with milk (~300 kcal); Salad (~250 kcal)');
             expect(prompt).toContain('target of **2000 kcal**');
         });
@@ -106,7 +114,8 @@ describe('geminiService', () => {
         it('should specify the condition clearly in the prompt', async () => {
             await generateRecipesByCondition('Diabetes');
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const prompt = mockGenerateContent.mock.calls[0][0].contents[0].parts[0].text;
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const prompt = (mockGenerateContent.mock.calls[0][0] as any).contents[0].parts[0].text;
             expect(prompt).toContain('medical condition: **Diabetes**');
             expect(prompt).toContain('## Ingredients');
         });
@@ -116,7 +125,8 @@ describe('geminiService', () => {
         it('should specify the ingredient clearly in the prompt', async () => {
             await generateRecipesByIngredient('Paneer');
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const prompt = mockGenerateContent.mock.calls[0][0].contents[0].parts[0].text;
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const prompt = (mockGenerateContent.mock.calls[0][0] as any).contents[0].parts[0].text;
             expect(prompt).toContain('focusing on **Paneer** as the main ingredient');
             expect(prompt).toContain("## Chef's Note");
         });
@@ -126,7 +136,8 @@ describe('geminiService', () => {
         it('should use the PRO model and include the report findings', async () => {
             await analyzeMedicalReport('HbA1c: 7.5%');
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const call = mockGenerateContent.mock.calls[0][0];
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const call = mockGenerateContent.mock.calls[0][0] as any;
             expect(call.model).toBe('gemini-3-pro-preview');
             expect(call.contents[0].parts[0].text).toContain('FINDINGS: HbA1c: 7.5%');
             expect(call.contents[0].parts[0].text).toContain('### Diagnosis/Explanation');
@@ -137,7 +148,8 @@ describe('geminiService', () => {
         it('should generate the correct prompt for "food_sources"', async () => {
             await getNutritionalGuidance('Iron Deficiency', 'food_sources');
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const prompt = mockGenerateContent.mock.calls[0][0].contents[0].parts[0].text;
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const prompt = (mockGenerateContent.mock.calls[0][0] as any).contents[0].parts[0].text;
             expect(prompt).toContain('diagnosis/symptoms: Iron Deficiency');
             expect(prompt).toContain('### Top Indian Food Sources');
         });
@@ -146,6 +158,8 @@ describe('geminiService', () => {
     describe('performGroundedSearch', () => {
         it('should call the API with the googleSearch tool and correctly parse the response', async () => {
             const mockSource: GroundingChunk = { web: { uri: 'http://example.com', title: 'Example' }};
+            // FIX: Cast mock to jest.Mock to resolve values without type errors.
+            // Fix: Removed unnecessary cast as mock is now typed.
             mockGenerateContent.mockResolvedValue({
                 text: 'Grounded response.',
                 candidates: [{ groundingMetadata: { groundingChunks: [mockSource] } }],
@@ -154,7 +168,8 @@ describe('geminiService', () => {
             const result = await performGroundedSearch('latest health news');
             
             expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            const call = mockGenerateContent.mock.calls[0][0];
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const call = mockGenerateContent.mock.calls[0][0] as any;
             expect(call.config.tools).toEqual([{ googleSearch: {} }]);
             
             expect(result.text).toBe('Grounded response.');
@@ -169,7 +184,8 @@ describe('geminiService', () => {
             const history: ChatMessage[] = [{ role: 'user', text: 'Hello' }];
             startChat(history);
             expect(mockChatCreate).toHaveBeenCalledTimes(1);
-            const call = mockChatCreate.mock.calls[0][0];
+            // FIX: Cast mock call argument to any to access properties without type errors.
+            const call = mockChatCreate.mock.calls[0][0] as any;
             expect(call.model).toBe('gemini-2.5-flash');
             expect(call.history).toEqual([{ role: 'user', parts: [{ text: 'Hello' }] }]);
             expect(call.config.systemInstruction).toContain('helpful and friendly AI assistant');
@@ -179,7 +195,10 @@ describe('geminiService', () => {
     // FIX: Add tests for sendMessageToChat function.
     describe('sendMessageToChat', () => {
         it('should send a message and return the response text', async () => {
-            const chat = mockChatCreate(); // This gives us an object with sendMessage
+            // Fix: Cast the mock chat object to 'any' to satisfy the Chat type requirement for the test.
+            const chat = mockChatCreate() as any; // This gives us an object with sendMessage
+            // FIX: Cast mock to jest.Mock to resolve values without type errors.
+            // Fix: Removed unnecessary cast as mock is now typed.
             mockSendMessage.mockResolvedValue({ text: 'Hi there!' });
 
             const response = await sendMessageToChat(chat, 'Hello');
@@ -189,7 +208,10 @@ describe('geminiService', () => {
         });
         
         it('should handle errors during sending message', async () => {
-            const chat = mockChatCreate();
+            // Fix: Cast the mock chat object to 'any' to satisfy the Chat type requirement for the test.
+            const chat = mockChatCreate() as any;
+            // FIX: Cast mock to jest.Mock to reject values without type errors.
+            // Fix: Removed unnecessary cast as mock is now typed.
             mockSendMessage.mockRejectedValue(new Error('Send failed'));
 
             const response = await sendMessageToChat(chat, 'Hello');
@@ -200,6 +222,8 @@ describe('geminiService', () => {
 
     it('should handle API errors gracefully', async () => {
         // Configure mock to throw an error
+        // FIX: Cast mock to jest.Mock to reject values without type errors.
+        // Fix: Removed unnecessary cast as mock is now typed.
         mockGenerateContent.mockRejectedValue(new Error('API Limit Reached'));
         
         const result = await generateRecipesByCondition('Anything');
